@@ -17,8 +17,4 @@ __status__ = "Prototype"
 # Downloaded Libraries #
 
 # Local Libraries #
-from .version import Version, VersionType
-from .versions import *
-from .versionregistry import VersionRegistry
-from .versionedclass import VersionedMeta, VersionedClass
-
+from .trinumberversion import TriNumberVersion
