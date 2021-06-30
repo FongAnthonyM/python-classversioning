@@ -226,6 +226,7 @@ class VersionedClass(metaclass=VersionedMeta):
 
     @staticmethod
     def get_version_from_object(obj):
+        """An optional abstract method that must return a version from an object."""
         raise NotImplementedError("This method needs to be defined in the subclass.")
 
     @classmethod
@@ -249,6 +250,6 @@ class VersionedClass(metaclass=VersionedMeta):
 
         if not isinstance(version, str) and not isinstance(version, list) and \
            not isinstance(version, tuple) and not isinstance(version, Version):
-            version = cls.get_version_class(version)
+            version = cls.get_version_from_object(version)
 
         return cls._registry.get_version(type_, version, exact=exact)

@@ -54,12 +54,27 @@ class TestVersionedClass(ClassTest):
         # versioned classes that they should have
         # different names.
 
+        @staticmethod
+        def get_version_from_object(obj):
+            return obj["version"]
+
+        # Automatic Version Instantiation
+        def __new__(cls, *args, **kwargs):
+            if cls == TestVersionedClass.ExampleVersioning:
+                if args:
+                    obj = args[0]
+                else:
+                    obj = kwargs["obj"]
+                class_ = cls.get_version_class(obj)
+                return class_(*args, **kwargs)
+            else:
+                return super(TestVersionedClass.ExampleVersioning, cls).__new__(cls)
 
     class Example1_0_0(ExampleVersioning):
         """This class is the first of Examples version 1.0.0 which implements some adding"""
         VERSION = TriNumberVersion(1, 0, 0)  # Version can be defined through version object
 
-        def __init__(self):
+        def __init__(self, *args, **kwargs):
             self.a = 1
             self.b = 2
 
@@ -77,7 +92,7 @@ class TestVersionedClass(ClassTest):
         """Rather than inherit from previous version, this class reimplements the whole class."""
         VERSION = (2, 0, 0)
 
-        def __init__(self):
+        def __init__(self,  *args, **kwargs):
             self.a = 1
             self.c = 3
 
@@ -109,6 +124,16 @@ class TestVersionedClass(ClassTest):
             else:
                 example_object.multiply(d["number"])
                 print(example_object.a)
+
+    def test_auto_versioning(self):
+        # Data
+        dataset1 = {"version": "1.0.0", "number": 1}
+        dataset2 = {"version": (1, 2, 0), "number": 2}
+        dataset3 = {"version": TriNumberVersion(2, 0, 0, ver_name="Example"), "number": 3}
+
+        test = self.ExampleVersioning(dataset1)
+
+
 
 
 # Main #
