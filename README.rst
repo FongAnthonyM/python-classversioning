@@ -51,7 +51,7 @@ Overview
     :alt: Supported implementations
     :target: https://pypi.org/project/classversioning
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/fonganthonym/python-classversioning/v0.1.0.svg
+.. |commits-since| image:: https://img.shields.io/github/commits-since/fonganthonym/python-classversioning/v0..0.svg
     :alt: Commits since latest release
     :target: https://github.com/fonganthonym/python-classversioning/compare/v0.1.0...master
 
