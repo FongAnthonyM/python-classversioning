@@ -1,20 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """ version.py
-
-Provides version tools to create versioning. The Version class is a dataclass like class which uses the three number
-version convention. Subsequent classes use the Version class to do useful version comparisons. The versioning framework
-can be used for normal objects, but it is primarily designed around versioning classes. This is useful for creating
-classes that have to interface with datastructures that change frequently and support for previous version are needed.
-For example, a file type may change how data is stored within it but you might have files of the new and previous
-version. In this case an appropriate class which addresses each version can be chosen based on the version of the file.
-
+Version is an abstract class which versions of different types can be defined from.
 """
 __author__ = "Anthony Fong"
 __copyright__ = "Copyright 2021, Anthony Fong"
 __credits__ = ["Anthony Fong"]
 __license__ = ""
-__version__ = "1.0.0"
+__version__ = "0.1.0"
 __maintainer__ = "Anthony Fong"
 __email__ = ""
 __status__ = "Prototype"
@@ -26,90 +19,16 @@ from abc import abstractmethod
 from baseobjects import BaseObject
 
 # Local Libraries #
+from .versiontype import VersionType
 
 
 # Definitions #
 # Classes #
-class VersionType(BaseObject):
-    """A dataclass like object that contains a str name and associated class for a version.
-
-    Attributes:
-        name (str, optional): The string name of this object.
-        class_ (:class:, optional): The class of the version.
-
-    Args:
-        name (str): The string name of this object.
-        class_ (:class:): The class of the version.
-    """
-    __slots__ = ["name", "class_"]
-
-    # Construction/Destruction
-    def __init__(self, name=None, class_=None, init=True):
-        self.name = None
-        self.class_ = None
-
-        if init:
-            self.construct(name=name, class_=class_)
-
-    # Type Conversion
-    def __str__(self):
-        """Returns the str representation of the version.
-
-        Returns:
-            str: A str with the version numbers in order.
-        """
-        return self.name
-
-    # Comparison
-    def __eq__(self, other):
-        """Expands on equals comparison to include comparing the version number.
-
-        Args:
-            other (:obj:): The object to compare to this object.
-
-        Returns:
-            bool: True if the other object or version number is equivalent.
-        """
-        if isinstance(other, type(self)):
-            return other.name == self.name
-        if isinstance(other, str):
-            return other == self.name
-        else:
-            return super().__eq__(other)
-
-    def __ne__(self, other):
-        """Expands on not equals comparison to include comparing the version number.
-
-        Args:
-            other (:obj:): The object to compare to this object.
-
-        Returns:
-            bool: True if the other object or version number is not equivalent.
-        """
-        if isinstance(other, type(self)):
-            return other.name != self.name
-        if isinstance(other, str):
-            return other != self.name
-        else:
-            return super().__ne__(other)
-
-    # Methods
-    def construct(self, name=None, class_=None):
-        """Constructs the version type object based on inputs.
-
-        Args:
-            name (str, optional): The string name of this object.
-            class_ (:class:, optional): The class of the version.
-        """
-        self.name = name
-        self.class_ = class_
-
-
 class Version(BaseObject):
     """An abstract class for creating versions which dataclass like classes that stores and handles a versioning.
 
     Class Attributes:
-        version_name (str): The name of the version.
+        default_version_name (str): The name of the version.
 
     Attributes:
         version_type (:obj:`VersionType`): The type of version object this object is.
@@ -161,7 +80,7 @@ class Version(BaseObject):
         self.version_type = None
 
         if init:
-            self.construct(obj=obj, ver_name=ver_name, **kwargs)
+            self.construct(obj=obj, ver_name=ver_name)
 
     # Type Conversion
     @abstractmethod
@@ -280,7 +199,7 @@ class Version(BaseObject):
 
     # Methods
     @abstractmethod
-    def construct(self, obj=None, ver_name=None, **kwargs):
+    def construct(self, obj=None, ver_name=None):
         """Constructs the version object based on inputs
 
         Args:
@@ -316,5 +235,9 @@ class Version(BaseObject):
         return str(self)
 
     def set_version_type(self, name):
+        """Creates a new VersionType for this object.
 
+        Args:
+            name (str): The name of the new VersionType.
+        """
         self.version_type = VersionType(name, type(self))

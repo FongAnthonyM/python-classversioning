@@ -1,13 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """ versionregistry.py
-Description:
+VersionRegistry creates registries of the Versions which keeps track of several versioning schemas. For example, there
+could be two different file types that both use TriNumberVersions, this registry keeps the class versions from these
+different files separate from each other.
 """
 __author__ = "Anthony Fong"
 __copyright__ = "Copyright 2021, Anthony Fong"
 __credits__ = ["Anthony Fong"]
 __license__ = ""
-__version__ = "1.0.0"
+__version__ = "0.1.0"
 __maintainer__ = "Anthony Fong"
 __email__ = ""
 __status__ = "Prototype"

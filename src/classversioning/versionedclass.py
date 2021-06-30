@@ -1,13 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """ versionedclass.py
-Description:
+VersionedClass is an abstract class which has an associated version which can be used to compare against other
+VersionedClasses. Typically, a base class for a version schema should directly inherit from VersionedClass then the
+actual versions should inherit from that base class.
 """
 __author__ = "Anthony Fong"
 __copyright__ = "Copyright 2021, Anthony Fong"
 __credits__ = ["Anthony Fong"]
 __license__ = ""
-__version__ = "1.0.0"
+__version__ = "0.1.0"
 __maintainer__ = "Anthony Fong"
 __email__ = ""
 __status__ = "Prototype"
