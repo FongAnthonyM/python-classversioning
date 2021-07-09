@@ -23,7 +23,7 @@ def read(*names, **kwargs):
 
 setup(
     name='classversioning',
-    version='0.2.0',
+    version='0.3.0',
     license='BSD-2-Clause',
     description='Tools for create versioning for classes using inheritance.',
     long_description='%s\n%s' % (
@@ -71,7 +71,7 @@ setup(
     ],
     python_requires='>=3.6',
     install_requires=[
-        'baseobjects',
+        'baseobjects>=1.4.2',
     ],
     extras_require={
         'dev': ['pytest'],

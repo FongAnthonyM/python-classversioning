@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-""" __init__.py
-Various, widely used versions used.
+""" versionedinitmeta.py
+Description:
 """
 __author__ = "Anthony Fong"
 __copyright__ = "Copyright 2021, Anthony Fong"
@@ -15,6 +15,14 @@ __status__ = "Prototype"
 # Default Libraries #
 
 # Downloaded Libraries #
+from baseobjects import InitMeta
 
 # Local Libraries #
-from .trinumberversion import TriNumberVersion
+from .versionedmeta import VersionedMeta
+
+
+# Definitions #
+# Meta Classes #
+class VersionedInitMeta(InitMeta, VersionedMeta):
+    """A mixed class of the InitMeta and VersionMeta."""
+    ...

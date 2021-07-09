@@ -7,7 +7,7 @@ __author__ = "Anthony Fong"
 __copyright__ = "Copyright 2021, Anthony Fong"
 __credits__ = ["Anthony Fong"]
 __license__ = ""
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 __maintainer__ = "Anthony Fong"
 __email__ = ""
 __status__ = "Prototype"
@@ -74,6 +74,7 @@ class Version(BaseObject):
             name = cls.default_version_name
         return VersionType(name, cls)
 
+    # Matic Methods
     # Construction/Destruction
     @abstractmethod
     def __init__(self, obj=None, ver_name=None, init=True, **kwargs):
@@ -197,7 +198,8 @@ class Version(BaseObject):
         else:
             raise TypeError(f"'>=' not supported between instances of '{str(self)}' and '{str(other)}'")
 
-    # Methods
+    # Instance Methods
+    # Constructors/Destructors
     @abstractmethod
     def construct(self, obj=None, ver_name=None):
         """Constructs the version object based on inputs
@@ -208,6 +210,7 @@ class Version(BaseObject):
         """
         self.version_type = self.create_version_type(ver_name)
 
+    # Type Conversion
     @abstractmethod
     def list(self):
         """Returns the list representation of the version.
@@ -234,6 +237,7 @@ class Version(BaseObject):
         """
         return str(self)
 
+    # Typing
     def set_version_type(self, name):
         """Creates a new VersionType for this object.
 
