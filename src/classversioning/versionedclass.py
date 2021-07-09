@@ -9,7 +9,7 @@ __author__ = "Anthony Fong"
 __copyright__ = "Copyright 2021, Anthony Fong"
 __credits__ = ["Anthony Fong"]
 __license__ = ""
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 __maintainer__ = "Anthony Fong"
 __email__ = ""
 __status__ = "Prototype"
@@ -17,184 +17,15 @@ __status__ = "Prototype"
 # Default Libraries #
 
 # Downloaded Libraries #
-from baseobjects import BaseMeta
 
 # Local Libraries #
+from .meta import VersionedMeta
 from .version import Version
 from .versionregistry import VersionRegistry
 
 
 # Definitions #
 # Classes #
-class VersionedMeta(BaseMeta):
-    """A Meta Class that can compare the specified version of the classes.
-
-    Class Attributes:
-        _VERSION_TYPE (:obj:`VersionType`): The type of version this object will be.
-        VERSION (:obj:`Version`): The version of this class as a string.
-    """
-    _VERSION_TYPE = None
-    VERSION = None
-
-    # Methods
-    # Comparison
-    def __eq__(cls, other):
-        """Expands on equals comparison to include comparing the version.
-
-        Args:
-            other (:obj:): The object to compare to this class.
-
-        Returns:
-            bool: True if the other object is equivalent to this class, including version.
-
-        Raises:
-            TypeError: If 'other' is a type that cannot be compared to.
-        """
-        if isinstance(other, type(cls)):
-            if cls._VERSION_TYPE != other._VERSION_TYPE:
-                raise TypeError(f"'==' not supported between instances of '{str(cls)}' and '{str(other)}'")
-            other_version = other.VERSION
-        elif isinstance(other, Version):
-            other_version = other
-        else:
-            other_version = cls.VERSION.cast(other)
-
-        if isinstance(other_version, type(cls.VERSION)):
-            return cls.VERSION == other_version
-        else:
-            raise TypeError(f"'==' not supported between instances of '{str(cls)}' and '{str(other)}'")
-
-    def __ne__(cls, other):
-        """Expands on not equals comparison to include comparing the version.
-
-        Args:
-            other (:obj:): The object to compare to this class.
-
-        Returns:
-            bool: True if the other object is not equivalent to this class, including version number.
-
-        Raises:
-            TypeError: If 'other' is a type that cannot be compared to.
-        """
-        if isinstance(other, type(cls)):
-            if cls._VERSION_TYPE != other._VERSION_TYPE:
-                raise TypeError(f"'!=' not supported between instances of '{str(cls)}' and '{str(other)}'")
-            other_version = other.VERSION
-        elif isinstance(other, Version):
-            other_version = other
-        else:
-            other_version = cls.VERSION.cast(other)
-
-        if isinstance(other_version, type(cls.VERSION)):
-            return cls.VERSION != other_version
-        else:
-            raise TypeError(f"'!=' not supported between instances of '{str(cls)}' and '{str(other)}'")
-
-    def __lt__(cls, other):
-        """Creates the less than comparison which compares the version of this class.
-
-        Args:
-            other (:obj:): The object to compare to this class.
-
-        Returns:
-            bool: True if the this object is less than to the other classes' version.
-
-        Raises:
-            TypeError: If 'other' is a type that cannot be compared to.
-        """
-        if isinstance(other, type(cls)):
-            if cls._VERSION_TYPE != other._VERSION_TYPE:
-                raise TypeError(f"'<' not supported between instances of '{str(cls)}' and '{str(other)}'")
-            other_version = other.VERSION
-        elif isinstance(other, Version):
-            other_version = other
-        else:
-            other_version = cls.VERSION.cast(other)
-
-        if isinstance(other_version, type(cls.VERSION)):
-            return cls.VERSION < other_version
-        else:
-            raise TypeError(f"'<' not supported between instances of '{str(cls)}' and '{str(other)}'")
-
-    def __gt__(cls, other):
-        """Creates the greater than comparison which compares the version of this class.
-
-        Args:
-            other (:obj:): The object to compare to this class.
-
-        Returns:
-            bool: True if the this object is greater than to the other classes' version.
-
-        Raises:
-            TypeError: If 'other' is a type that cannot be compared to.
-        """
-        if isinstance(other, type(cls)):
-            if cls._VERSION_TYPE != other._VERSION_TYPE:
-                raise TypeError(f"'>' not supported between instances of '{str(cls)}' and '{str(other)}'")
-            other_version = other.VERSION
-        elif isinstance(other, Version):
-            other_version = other
-        else:
-            other_version = cls.VERSION.cast(other)
-
-        if isinstance(other_version, type(cls.VERSION)):
-            return cls.VERSION > other_version
-        else:
-            raise TypeError(f"'>' not supported between instances of '{str(cls)}' and '{str(other)}'")
-
-    def __le__(cls, other):
-        """Creates the less than or equal to comparison which compares the version of this class.
-
-        Args:
-            other (:obj:): The object to compare to this class.
-
-        Returns:
-            bool: True if the this object is less than or equal to the other classes' version.
-
-        Raises:
-            TypeError: If 'other' is a type that cannot be compared to.
-        """
-        if isinstance(other, type(cls)):
-            if cls._VERSION_TYPE != other._VERSION_TYPE:
-                raise TypeError(f"'<=' not supported between instances of '{str(cls)}' and '{str(other)}'")
-            other_version = other.VERSION
-        elif isinstance(other, Version):
-            other_version = other
-        else:
-            other_version = cls.VERSION.cast(other)
-
-        if isinstance(other_version, type(cls.VERSION)):
-            return cls.VERSION <= other_version
-        else:
-            raise TypeError(f"'<=' not supported between instances of '{str(cls)}' and '{str(other)}'")
-
-    def __ge__(cls, other):
-        """Creates the greater than or equal to comparison which compares the version of this class.
-
-        Args:
-            other (:obj:): The object to compare to this class.
-
-        Returns:
-            bool: True if the this object is greater than or equal to the other classes' version.
-
-        Raises:
-            TypeError: If 'other' is a type that cannot be compared to.
-        """
-        if isinstance(other, type(cls)):
-            if cls._VERSION_TYPE != other._VERSION_TYPE:
-                raise TypeError(f"'>=' not supported between instances of '{str(cls)}' and '{str(other)}'")
-            other_version = other.VERSION
-        elif isinstance(other, Version):
-            other_version = other
-        else:
-            other_version = cls.VERSION.cast(other)
-
-        if isinstance(other_version, type(cls.VERSION)):
-            return cls.VERSION <= other_version
-        else:
-            raise TypeError(f"'>=' not supported between instances of '{str(cls)}' and '{str(other)}'")
-
-
 class VersionedClass(metaclass=VersionedMeta):
     """An abstract class allows child classes to specify its version which it can use to compare.
 
@@ -209,7 +40,7 @@ class VersionedClass(metaclass=VersionedMeta):
     _VERSION_TYPE = None
     VERSION = None
 
-    # Class Methods
+    # Meta Magic Methods
     # Construction/Destruction
     def __init_subclass__(cls, **kwargs):
         """Adds the future child classes to the registry upon class instantiation"""
@@ -226,11 +57,13 @@ class VersionedClass(metaclass=VersionedMeta):
         if cls._registration:
             cls._registry.add_item(cls, type_)
 
+    # Static Methods
     @staticmethod
     def get_version_from_object(obj):
         """An optional abstract method that must return a version from an object."""
         raise NotImplementedError("This method needs to be defined in the subclass.")
 
+    # Class Methods
     @classmethod
     def get_version_class(cls, version, type_=None, exact=False, sort=False):
         """Gets a class class based on the version.
@@ -255,3 +88,17 @@ class VersionedClass(metaclass=VersionedMeta):
             version = cls.get_version_from_object(version)
 
         return cls._registry.get_version(type_, version, exact=exact)
+
+    # Magic Methods
+    # Construction/Destruction
+    def __new__(cls, *args, **kwargs):
+        """With given input, will return the correct subclass."""
+        if cls == VersionedClass and (kwargs or args):
+            if args:
+                obj = args[0]
+            else:
+                obj = kwargs["obj"]
+            class_ = cls.get_version_class(obj)
+            return class_(*args, **kwargs)
+        else:
+            return super(VersionedClass, cls).__new__(cls)

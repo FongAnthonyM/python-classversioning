@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """ versionregistry.py
-VersionRegistry creates registries of the Versions which keeps track of several versioning schemas. For example, there
+VersionRegistry creates registries of the Versions which keep track of several versioning schemas. For example, there
 could be two different file types that both use TriNumberVersions, this registry keeps the class versions from these
 different files separate from each other.
 """
@@ -9,7 +9,7 @@ __author__ = "Anthony Fong"
 __copyright__ = "Copyright 2021, Anthony Fong"
 __credits__ = ["Anthony Fong"]
 __license__ = ""
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 __maintainer__ = "Anthony Fong"
 __email__ = ""
 __status__ = "Prototype"
@@ -33,7 +33,7 @@ class VersionRegistry(UserDict):
     are lists containing the versioned objects in order by version.
     """
 
-    # Methods
+    # Instance Methods
     def get_version(self, type_, key, exact=False):
         """Gets an object from the registry base on the type and version of object.
 

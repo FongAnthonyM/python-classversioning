@@ -9,7 +9,7 @@ __author__ = "Anthony Fong"
 __copyright__ = "Copyright 2021, Anthony Fong"
 __credits__ = ["Anthony Fong"]
 __license__ = ""
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 __maintainer__ = "Anthony Fong"
 __email__ = ""
 __status__ = "Prototype"
@@ -42,6 +42,7 @@ class TriNumberVersion(Version):
     default_version_name = "TriNumber"
     __slots__ = ["major", "minor", "patch"]
 
+    # Magic Methods
     # Construction/Destruction
     def __init__(self, obj=None, major=0, minor=0, patch=0, ver_name=None, init=True):
         super().__init__(init=False)
@@ -200,7 +201,8 @@ class TriNumberVersion(Version):
             except TypeError:
                 raise TypeError(f"'>=' not supported between instances of '{str(self)}' and '{str(other)}'")
 
-    # Methods
+    # Instance Methods
+    # Constructors/Destructors
     def construct(self, obj=None, minor=0, patch=0, major=0, ver_name=None):
         """Constructs the version object based on inputs
 
@@ -232,6 +234,7 @@ class TriNumberVersion(Version):
 
         super().construct(ver_name)
 
+    # Type Conversion
     def list(self):
         """Returns the list representation of the version.
 

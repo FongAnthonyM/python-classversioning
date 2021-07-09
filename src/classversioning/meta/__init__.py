@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """ __init__.py
-Various, widely used versions used.
+Description:
 """
 __author__ = "Anthony Fong"
 __copyright__ = "Copyright 2021, Anthony Fong"
@@ -17,4 +17,5 @@ __status__ = "Prototype"
 # Downloaded Libraries #
 
 # Local Libraries #
-from .trinumberversion import TriNumberVersion
+from .versionedmeta import VersionedMeta
+from .versionedinitmeta import VersionedInitMeta

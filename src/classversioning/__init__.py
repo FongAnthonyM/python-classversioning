@@ -13,7 +13,7 @@ __author__ = "Anthony Fong"
 __copyright__ = "Copyright 2021, Anthony Fong"
 __credits__ = ["Anthony Fong"]
 __license__ = ""
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 __maintainer__ = "Anthony Fong"
 __email__ = ""
 __status__ = "Prototype"
@@ -23,8 +23,9 @@ __status__ = "Prototype"
 # Downloaded Libraries #
 
 # Local Libraries #
+from .meta import *
 from .version import Version, VersionType
 from .versions import *
 from .versionregistry import VersionRegistry
-from .versionedclass import VersionedMeta, VersionedClass
+from .versionedclass import VersionedClass
 
