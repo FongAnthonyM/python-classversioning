@@ -23,7 +23,7 @@ def read(*names, **kwargs):
 
 setup(
     name='classversioning',
-    version='0.3.0',
+    version='0.3.1',
     license='BSD-2-Clause',
     description='Tools for create versioning for classes using inheritance.',
     long_description='%s\n%s' % (

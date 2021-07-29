@@ -7,7 +7,7 @@ __author__ = "Anthony Fong"
 __copyright__ = "Copyright 2021, Anthony Fong"
 __credits__ = ["Anthony Fong"]
 __license__ = ""
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 __maintainer__ = "Anthony Fong"
 __email__ = ""
 __status__ = "Prototype"
@@ -34,6 +34,15 @@ class VersionedMeta(BaseMeta):
     VERSION = None
 
     # Magic Methods
+    # Representation
+    def __hash__(self):
+        """Overrides hash to make the class hashable.
+
+        Returns:
+            The system ID of the class.
+        """
+        return id(self)
+
     # Comparison
     def __eq__(cls, other):
         """Expands on equals comparison to include comparing the version.
@@ -48,8 +57,10 @@ class VersionedMeta(BaseMeta):
             TypeError: If 'other' is a type that cannot be compared to.
         """
         if isinstance(other, type(cls)):
-            if cls._VERSION_TYPE != other._VERSION_TYPE:
-                raise TypeError(f"'==' not supported between instances of '{str(cls)}' and '{str(other)}'")
+            if id(cls) == id(object):
+                return True
+            elif cls._VERSION_TYPE != other._VERSION_TYPE:
+                return False
             other_version = other.VERSION
         elif isinstance(other, Version):
             other_version = other
@@ -75,7 +86,7 @@ class VersionedMeta(BaseMeta):
         """
         if isinstance(other, type(cls)):
             if cls._VERSION_TYPE != other._VERSION_TYPE:
-                raise TypeError(f"'!=' not supported between instances of '{str(cls)}' and '{str(other)}'")
+                super().__ne__(other)
             other_version = other.VERSION
         elif isinstance(other, Version):
             other_version = other
