@@ -9,7 +9,7 @@ __author__ = "Anthony Fong"
 __copyright__ = "Copyright 2021, Anthony Fong"
 __credits__ = ["Anthony Fong"]
 __license__ = ""
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 __maintainer__ = "Anthony Fong"
 __email__ = ""
 __status__ = "Prototype"
@@ -93,7 +93,7 @@ class VersionedClass(metaclass=VersionedMeta):
     # Construction/Destruction
     def __new__(cls, *args, **kwargs):
         """With given input, will return the correct subclass."""
-        if cls == VersionedClass and (kwargs or args):
+        if id(cls) == id(VersionedClass) and (kwargs or args):
             if args:
                 obj = args[0]
             else:
@@ -101,4 +101,4 @@ class VersionedClass(metaclass=VersionedMeta):
             class_ = cls.get_version_class(obj)
             return class_(*args, **kwargs)
         else:
-            return super(VersionedClass, cls).__new__(cls)
+            return super().__new__(cls)

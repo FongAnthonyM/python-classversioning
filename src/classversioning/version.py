@@ -7,7 +7,7 @@ __author__ = "Anthony Fong"
 __copyright__ = "Copyright 2021, Anthony Fong"
 __credits__ = ["Anthony Fong"]
 __license__ = ""
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 __maintainer__ = "Anthony Fong"
 __email__ = ""
 __status__ = "Prototype"
@@ -82,6 +82,15 @@ class Version(BaseObject):
 
         if init:
             self.construct(obj=obj, ver_name=ver_name)
+
+    # Representation
+    def __hash__(self):
+        """Overrides hash to make the object hashable.
+
+        Returns:
+            The system ID of the object.
+        """
+        return id(self)
 
     # Type Conversion
     @abstractmethod
