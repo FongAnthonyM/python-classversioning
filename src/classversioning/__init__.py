@@ -26,4 +26,3 @@ from .version import Version, VersionType
 from .versions import *
 from .versionregistry import VersionRegistry
 from .versionedclass import VersionedClass
-

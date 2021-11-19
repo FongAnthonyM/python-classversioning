@@ -1,7 +1,6 @@
-=====
 Usage
 =====
 
-To use classversioning in a project::
-
-	import classversioning
+.. click:: classversioning.__main__:main
+   :prog: classversioning
+   :nested: full

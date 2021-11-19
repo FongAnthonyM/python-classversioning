@@ -89,7 +89,7 @@ setup(
     ],
     python_requires='>=3.6',
     install_requires=[
-        'baseobjects>=1.4.2',
+        'baseobjects>=1.5.1',
     ],
     extras_require={
         'dev': ['pytest'],
