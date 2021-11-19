@@ -5,20 +5,22 @@ TriNumberVersion is a versioning system which is defined by three numbers. This 
 meaning of the three number, but the Major number is more significant than the Minor number which is more
 significant than the Patch number. A good example of the tri-number framework can be found at https://semver.org/
 """
-__author__ = "Anthony Fong"
-__copyright__ = "Copyright 2021, Anthony Fong"
-__credits__ = ["Anthony Fong"]
-__license__ = ""
-__version__ = "0.3.1"
-__maintainer__ = "Anthony Fong"
-__email__ = ""
-__status__ = "Prototype"
+# Package Header #
+from ..__header__ import *
 
-# Default Libraries #
+# Header #
+__author__ = __author__
+__credits__ = __credits__
+__maintainer__ = __maintainer__
+__email__ = __email__
 
-# Downloaded Libraries #
 
-# Local Libraries #
+# Imports #
+# Standard Libraries #
+
+# Third-Party Packages #
+
+# Local Packages #
 from ..version import Version
 
 

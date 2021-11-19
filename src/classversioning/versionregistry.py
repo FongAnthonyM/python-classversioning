@@ -5,22 +5,24 @@ VersionRegistry creates registries of the Versions which keep track of several v
 could be two different file types that both use TriNumberVersions, this registry keeps the class versions from these
 different files separate from each other.
 """
-__author__ = "Anthony Fong"
-__copyright__ = "Copyright 2021, Anthony Fong"
-__credits__ = ["Anthony Fong"]
-__license__ = ""
-__version__ = "0.3.1"
-__maintainer__ = "Anthony Fong"
-__email__ = ""
-__status__ = "Prototype"
+# Package Header #
+from .__header__ import *
 
-# Default Libraries #
+# Header #
+__author__ = __author__
+__credits__ = __credits__
+__maintainer__ = __maintainer__
+__email__ = __email__
+
+
+# Imports #
+# Standard Libraries #
 import bisect
 from collections import UserDict
 
-# Downloaded Libraries #
+# Third-Party Packages #
 
-# Local Libraries #
+# Local Packages #
 from .version import VersionType
 
 

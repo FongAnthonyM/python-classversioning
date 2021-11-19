@@ -5,20 +5,22 @@ VersionedClass is an abstract class which has an associated version which can be
 VersionedClasses. Typically, a base class for a version schema should directly inherit from VersionedClass then the
 actual versions should inherit from that base class.
 """
-__author__ = "Anthony Fong"
-__copyright__ = "Copyright 2021, Anthony Fong"
-__credits__ = ["Anthony Fong"]
-__license__ = ""
-__version__ = "0.3.1"
-__maintainer__ = "Anthony Fong"
-__email__ = ""
-__status__ = "Prototype"
+# Package Header #
+from .__header__ import *
 
-# Default Libraries #
+# Header #
+__author__ = __author__
+__credits__ = __credits__
+__maintainer__ = __maintainer__
+__email__ = __email__
 
-# Downloaded Libraries #
 
-# Local Libraries #
+# Imports #
+# Standard Libraries #
+
+# Third-Party Packages #
+
+# Local Packages #
 from .meta import VersionedMeta
 from .version import Version
 from .versionregistry import VersionRegistry

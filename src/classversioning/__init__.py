@@ -9,20 +9,18 @@ are needed. For example, a file type may change how data is stored within it but
 previous version. In this case an appropriate class which addresses each version can be chosen based on the version of
 the file which can be defined by the class' version.
 """
-__author__ = "Anthony Fong"
-__copyright__ = "Copyright 2021, Anthony Fong"
-__credits__ = ["Anthony Fong"]
-__license__ = ""
-__version__ = "0.3.1"
-__maintainer__ = "Anthony Fong"
-__email__ = ""
-__status__ = "Prototype"
+# Package Header #
+from .__header__ import *
 
-# Default Libraries #
+# Header #
+__author__ = __author__
+__credits__ = __credits__
+__maintainer__ = __maintainer__
+__email__ = __email__
 
-# Downloaded Libraries #
 
-# Local Libraries #
+# Imports #
+# Local Packages #
 from .meta import *
 from .version import Version, VersionType
 from .versions import *

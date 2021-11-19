@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-""" versionedinitmeta.py
-Description:
+""" cachingversionedinitmeta.py
+
 """
 # Package Header #
 from ..__header__ import *
@@ -17,7 +17,7 @@ __email__ = __email__
 # Standard Libraries #
 
 # Third-Party Packages #
-from baseobjects import InitMeta
+from baseobjects.cachingtools import CachingInitMeta
 
 # Local Packages #
 from .versionedmeta import VersionedMeta
@@ -25,6 +25,6 @@ from .versionedmeta import VersionedMeta
 
 # Definitions #
 # Meta Classes #
-class VersionedInitMeta(InitMeta, VersionedMeta):
-    """A mixed class of the InitMeta and VersionMeta."""
+class CachingVersionedInitMeta(CachingInitMeta, VersionedMeta):
+    """A mixed class of the CachingInitMeta and VersionMeta."""
     ...
