@@ -1,6 +1,20 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
+""" setup.py
+The setup for this package.
+"""
+# Package Header #
+from src.classversioning.__header__ import *
 
+# Header #
+__author__ = __author__
+__credits__ = __credits__
+__maintainer__ = __maintainer__
+__email__ = __email__
+
+
+# Imports #
+# Standard Libraries #
 import io
 import re
 from glob import glob
@@ -9,10 +23,13 @@ from os.path import dirname
 from os.path import join
 from os.path import splitext
 
+# Third-Party Packages #
 from setuptools import find_packages
 from setuptools import setup
 
 
+# Definitions #
+# Functions #
 def read(*names, **kwargs):
     with io.open(
         join(dirname(__file__), *names),
@@ -21,10 +38,11 @@ def read(*names, **kwargs):
         return fh.read()
 
 
+# Main #
 setup(
-    name='classversioning',
-    version='0.3.1',
-    license='BSD-2-Clause',
+    name=__package_name__,
+    version=__version__,
+    license=__license__,
     description='Tools for create versioning for classes using inheritance.',
     long_description='%s\n%s' % (
         re.compile('^.. start-badges.*^.. end-badges', re.M | re.S).sub('', read('README.rst')),
@@ -71,7 +89,7 @@ setup(
     ],
     python_requires='>=3.6',
     install_requires=[
-        'baseobjects>=1.4.2',
+        'baseobjects>=1.5.1',
     ],
     extras_require={
         'dev': ['pytest'],
