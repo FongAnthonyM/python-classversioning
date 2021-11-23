@@ -66,8 +66,13 @@ class VersionedMeta(BaseMeta):
             other_version = other.VERSION
         elif isinstance(other, Version):
             other_version = other
+        elif cls.VERSION is not None:
+            try:
+                other_version = cls.VERSION.cast(other)
+            except TypeError:
+                return super().__eq__(other)
         else:
-            other_version = cls.VERSION.cast(other)
+            return super().__eq__(other)
 
         if isinstance(other_version, type(cls.VERSION)):
             return cls.VERSION == other_version
@@ -92,8 +97,13 @@ class VersionedMeta(BaseMeta):
             other_version = other.VERSION
         elif isinstance(other, Version):
             other_version = other
+        elif cls.VERSION is not None:
+            try:
+                other_version = cls.VERSION.cast(other)
+            except TypeError:
+                return super().__ne__(other)
         else:
-            other_version = cls.VERSION.cast(other)
+            return super().__ne__(other)
 
         if isinstance(other_version, type(cls.VERSION)):
             return cls.VERSION != other_version
