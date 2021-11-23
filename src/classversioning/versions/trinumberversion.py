@@ -74,11 +74,9 @@ class TriNumberVersion(Version):
         Returns:
             bool: True if the other object or version number is equivalent.
         """
-        other = self.cast(other, pass_=True)
-
-        if isinstance(other, type(self)):
+        if isinstance(other, TriNumberVersion):
             return self.tuple() == other.tuple()
-        elif "VERSION" in other.__dict__:
+        elif hasattr(other, "VERSION"):
             return self.tuple() == other.VERSION.tuple()  # Todo: Maybe change the order to be cast friendly
         else:
             try:
@@ -95,11 +93,9 @@ class TriNumberVersion(Version):
         Returns:
             bool: True if the other object or version number is not equivalent.
         """
-        other = self.cast(other, pass_=True)
-
-        if isinstance(other, type(self)):
+        if isinstance(other, TriNumberVersion):
             return self.tuple() != other.tuple()
-        elif "VERSION" in other.__dict__:
+        elif hasattr(other, "VERSION"):
             return self.tuple() != other.VERSION.tuple()
         else:
             try:
@@ -119,11 +115,9 @@ class TriNumberVersion(Version):
         Raises:
             TypeError: If 'other' is a type that cannot be compared to.
         """
-        other = self.cast(other, pass_=True)
-
-        if isinstance(other, type(self)):
+        if isinstance(other, TriNumberVersion):
             return self.tuple() < other.tuple()
-        elif "VERSION" in other.__dict__:
+        elif hasattr(other, "VERSION"):
             return self.tuple() < other.VERSION.tuple()
         else:
             try:
@@ -143,11 +137,9 @@ class TriNumberVersion(Version):
         Raises:
             TypeError: If 'other' is a type that cannot be compared to.
         """
-        other = self.cast(other, pass_=True)
-
-        if isinstance(other, type(self)):
+        if isinstance(other, TriNumberVersion):
             return self.tuple() > other.tuple()
-        elif "VERSION" in other.__dict__:
+        elif hasattr(other, "VERSION"):
             return self.tuple() > other.VERSION.tuple()
         else:
             try:
@@ -167,11 +159,9 @@ class TriNumberVersion(Version):
         Raises:
             TypeError: If 'other' is a type that cannot be compared to.
         """
-        other = self.cast(other, pass_=True)
-
-        if isinstance(other, type(self)):
+        if isinstance(other, TriNumberVersion):
             return self.tuple() <= other.tuple()
-        elif "VERSION" in other.__dict__:
+        elif hasattr(other, "VERSION"):
             return self.tuple() <= other.VERSION.tuple()
         else:
             try:
@@ -191,11 +181,9 @@ class TriNumberVersion(Version):
         Raises:
             TypeError: If 'other' is a type that cannot be compared to.
         """
-        other = self.cast(other, pass_=True)
-
-        if isinstance(other, type(self)):
+        if isinstance(other, TriNumberVersion):
             return self.tuple() >= other.tuple()
-        elif "VERSION" in other.__dict__:
+        elif hasattr(other, "VERSION"):
             return self.tuple() >= other.VERSION.tuple()
         else:
             try:
