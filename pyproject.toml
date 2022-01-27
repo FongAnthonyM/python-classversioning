@@ -18,7 +18,7 @@ Changelog = "https://github.com/FongAnthonyM/classversioning/releases"
 [tool.poetry.dependencies]
 python = "^3.10"
 click = "^8.0.1"
-baseobjects = "^1.5.1"
+baseobjects = "^1.6.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
