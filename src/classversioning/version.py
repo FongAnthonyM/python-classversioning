@@ -1,4 +1,3 @@
-
 """ version.py
 Version is an abstract class which versions of different types can be defined from.
 """
@@ -15,6 +14,7 @@ __email__ = __email__
 # Imports #
 # Standard Libraries #
 from abc import abstractmethod
+from typing import Any
 
 # Third-Party Packages #
 from baseobjects import BaseObject
@@ -29,26 +29,27 @@ class Version(BaseObject):
     """An abstract class for creating versions which dataclass like classes that stores and handles a versioning.
 
     Class Attributes:
-        default_version_name (str): The name of the version.
+        default_version_name: The name of the version.
 
     Attributes:
-        version_type (:obj:`VersionType`): The type of version object this object is.
+        version_type: The type of version object this object is.
 
     Args:
-        obj (:obj:, optional): An object to derive a version from.
-        ver_name (str, optional): The name of the version type being used.
-        init (bool, optional): Determines if the object should be initialized.
+        version: An object to derive a version from.
+        ver_name: The name of the version type being used.
+        init: Determines if this object will construct.
+        **kwargs: More keyword arguments for constructing this object
     """
-    default_version_name = "default"
+    default_version_name: str = "default"
 
     # Class Methods
     @classmethod
-    def cast(cls, other, pass_=False):
+    def cast(cls, other: Any, pass_: bool = False) -> "Version" | Any:
         """A cast method that optionally returns the original object rather than raise an error
 
         Args:
-            other (:obj:): An object to convert to this type.
-            pass_ (bool, optional): True to return original object rather than raise an error.
+            other: An object to convert to this type.
+            pass_: True to return original object rather than raise an error.
 
         Returns:
             obj: The converted object of this type or the original object.
@@ -62,14 +63,14 @@ class Version(BaseObject):
         return other
 
     @classmethod
-    def create_version_type(cls, name=None):
+    def create_version_type(cls, name: str = None) -> VersionType:
         """Create the version type of this version class.
 
         Args:
-            name (str): The which this type will referred to.
+            name: The which this type will referred to.
 
         Returns:
-            :obj:`VersionType`: The version type of this version.
+           The version type of this version.
         """
         if name is None:
             name = cls.default_version_name
@@ -78,14 +79,22 @@ class Version(BaseObject):
     # Matic Methods
     # Construction/Destruction
     @abstractmethod
-    def __init__(self, obj=None, ver_name=None, init=True, **kwargs):
-        self.version_type = None
+    def __init__(
+        self,
+        version: Any | None = None,
+        ver_name: str | None = None,
+        init: bool = True,
+        **kwargs: Any,
+    ) -> None:
+        # New Attributes #
+        self.version_type: VersionType | None = None
 
+        # Object Construction #
         if init:
-            self.construct(obj=obj, ver_name=ver_name)
+            self.construct(version=version, ver_name=ver_name, **kwargs)
 
     # Representation
-    def __hash__(self):
+    def __hash__(self) -> int:
         """Overrides hash to make the object hashable.
 
         Returns:
@@ -94,49 +103,48 @@ class Version(BaseObject):
         return id(self)
 
     # Type Conversion
-    @abstractmethod
-    def __str__(self):
+    def __str__(self) -> str:
         """Returns the str representation of the version.
 
         Returns:
-            str: A str with the version numbers in order.
+            A str with the version numbers in order.
         """
-        return super().__str__()
+        return self.str()
 
     # Comparison
     @abstractmethod
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> bool:
         """Expands on equals comparison to include comparing the version number.
 
         Args:
-            other (:obj:): The object to compare to this object.
+            other: The object to compare to this object.
 
         Returns:
-            bool: True if the other object or version number is equivalent.
+            True if the other object or version number is equivalent.
         """
         return super().__ne__(other)
 
     @abstractmethod
-    def __ne__(self, other):
+    def __ne__(self, other: Any) -> bool:
         """Expands on not equals comparison to include comparing the version number.
 
         Args:
-            other (:obj:): The object to compare to this object.
+            other: The object to compare to this object.
 
         Returns:
-            bool: True if the other object or version number is not equivalent.
+            True if the other object or version number is not equivalent.
         """
         return super().__ne__(other)
 
     @abstractmethod
-    def __lt__(self, other):
+    def __lt__(self, other: Any) -> bool:
         """Creates the less than comparison for these objects which includes str, list, and tuple.
 
         Args:
-            other (:obj:): The object to compare to this object.
+            other: The object to compare to this object.
 
         Returns:
-            bool: True if this object is less than to the other objects' version number.
+            True if this object is less than to the other objects' version number.
 
         Raises:
             TypeError: If 'other' is a type that cannot be compared to.
@@ -149,14 +157,14 @@ class Version(BaseObject):
             raise TypeError(f"'>' not supported between instances of '{str(self)}' and '{str(other)}'")
 
     @abstractmethod
-    def __gt__(self, other):
+    def __gt__(self, other: Any) -> bool:
         """Creates the greater than comparison for these objects which includes str, list, and tuple.
 
         Args:
-            other (:obj:): The object to compare to this object.
+            other: The object to compare to this object.
 
         Returns:
-            bool: True if this object is greater than to the other objects' version number.
+            True if this object is greater than to the other objects' version number.
 
         Raises:
             TypeError: If 'other' is a type that cannot be compared to.
@@ -169,14 +177,14 @@ class Version(BaseObject):
             raise TypeError(f"'>' not supported between instances of '{str(self)}' and '{str(other)}'")
 
     @abstractmethod
-    def __le__(self, other):
+    def __le__(self, other: Any) -> bool:
         """Creates the less than or equal to comparison for these objects which includes str, list, and tuple.
 
         Args:
-            other (:obj:): The object to compare to this object.
+            other: The object to compare to this object.
 
         Returns:
-            bool: True if this object is less than or equal to to the other objects' version number.
+            True if this object is less than or equal to to the other objects' version number.
 
         Raises:
             TypeError: If 'other' is a type that cannot be compared to.
@@ -189,14 +197,14 @@ class Version(BaseObject):
             raise TypeError(f"'<=' not supported between instances of '{str(self)}' and '{str(other)}'")
 
     @abstractmethod
-    def __ge__(self, other):
+    def __ge__(self, other: Any) -> bool:
         """Creates the greater than or equal to comparison for these objects which includes str, list, and tuple.
 
         Args:
-            other (:obj:): The object to compare to this object.
+            other: The object to compare to this object.
 
         Returns:
-            bool: True if this object is greater than or equal to to the other objects' version number.
+            True if this object is greater than or equal to to the other objects' version number.
 
         Raises:
             TypeError: If 'other' is a type that cannot be compared to.
@@ -211,47 +219,49 @@ class Version(BaseObject):
     # Instance Methods
     # Constructors/Destructors
     @abstractmethod
-    def construct(self, obj=None, ver_name=None):
+    def construct(self, version: Any = None, ver_name: str | None = None, **kwargs: Any) -> None:
         """Constructs the version object based on inputs
 
         Args:
-            obj (:obj:, optional): An object to derive a version from.
-            ver_name (str, optional): The name of the version type being used.
+            version: An object to derive a version from.
+            ver_name: The name of the version type being used.
+            **kwargs: More keyword arguments for constructing this object
         """
         self.version_type = self.create_version_type(ver_name)
 
     # Type Conversion
     @abstractmethod
-    def list(self):
+    def list(self) -> list[Any]:
         """Returns the list representation of the version.
 
         Returns:
-            :obj:`list` of :obj:`str`: The list representation of the version.
+            The list representation of the version.
         """
         pass
 
     @abstractmethod
-    def tuple(self):
+    def tuple(self) -> tuple[Any]:
         """Returns the tuple representation of the version.
 
         Returns:
-            :obj:`tuple` of :obj:`str`: The tuple representation of the version.
+            The tuple representation of the version.
         """
         pass
 
-    def str(self):
+    @abstractmethod
+    def str(self) -> str:
         """Returns the str representation of the version.
 
         Returns:
-            str: A str with the version numbers in order.
+            A str with the version numbers in order.
         """
-        return str(self)
+        return super().__str__()
 
     # Typing
-    def set_version_type(self, name):
+    def set_version_type(self, name: str) -> None:
         """Creates a new VersionType for this object.
 
         Args:
-            name (str): The name of the new VersionType.
+            The name of the new VersionType.
         """
         self.version_type = VersionType(name, type(self))

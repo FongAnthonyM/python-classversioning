@@ -1,5 +1,5 @@
 """ __init__.py
-Various, widely used versions used.
+Various, widely used versions.
 """
 # Package Header #
 from ..header import *

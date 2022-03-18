@@ -15,7 +15,7 @@ __email__ = __email__
 # Standard Libraries #
 
 # Third-Party Packages #
-from baseobjects import InitMeta
+from baseobjects.metaclasses import InitMeta
 
 # Local Packages #
 from .versionedmeta import VersionedMeta

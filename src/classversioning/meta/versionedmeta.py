@@ -13,7 +13,6 @@ __email__ = __email__
 
 # Imports #
 # Standard Libraries #
-from collections.abc import Hashable
 from typing import Any
 
 # Third-Party Packages #
@@ -37,7 +36,7 @@ class VersionedMeta(BaseMeta):
 
     # Magic Methods
     # Representation
-    def __hash__(self) -> Hashable:
+    def __hash__(self) -> int:
         """Overrides hash to make the class hashable.
 
         Returns:

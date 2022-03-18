@@ -16,11 +16,13 @@ __email__ = __email__
 
 # Imports #
 # Standard Libraries #
+from typing import Any
 
 # Third-Party Packages #
 
 # Local Packages #
 from .meta import VersionedMeta
+from .versiontype import VersionType
 from .version import Version
 from .versionregistry import VersionRegistry
 
@@ -31,19 +33,19 @@ class VersionedClass(metaclass=VersionedMeta):
     """An abstract class allows child classes to specify its version which it can use to compare.
 
     Class Attributes:
-        _registry (:obj:`VersionRegistry`): A registry of all subclasses and versions of this class.
-        _registration (bool): Specifies if versions will tracked and will recurse to parent.
-        _VERSION_TYPE (:obj:`VersionType`): The type of version this object will be.
-        VERSION (:obj:`Version`): The version of this class as a string.
+        _registry: A registry of all subclasses and versions of this class.
+        _registration: Specifies if versions will be tracked and will recurse to parent.
+        _VERSION_TYPE: The type of version this object will be.
+        VERSION: The version of this class as a string.
     """
-    _registry = VersionRegistry()
-    _registration = True
-    _VERSION_TYPE = None
-    VERSION = None
+    _registry: VersionRegistry = VersionRegistry()
+    _registration: bool = True
+    _VERSION_TYPE: VersionType = None
+    VERSION: Version = None
 
     # Meta Magic Methods
     # Construction/Destruction
-    def __init_subclass__(cls, **kwargs):
+    def __init_subclass__(cls, **kwargs: Any) -> None:
         """Adds the future child classes to the registry upon class instantiation"""
         super().__init_subclass__(**kwargs)
 
@@ -60,20 +62,20 @@ class VersionedClass(metaclass=VersionedMeta):
 
     # Static Methods
     @staticmethod
-    def get_version_from_object(obj):
+    def get_version_from_object(obj: Any) -> Version:
         """An optional abstract method that must return a version from an object."""
         raise NotImplementedError("This method needs to be defined in the subclass.")
 
     # Class Methods
     @classmethod
-    def get_version_class(cls, version, type_=None, exact=False, sort=False):
-        """Gets a class class based on the version.
+    def get_version_class(cls, version: Any, type_=None, exact: bool = False, sort: bool = False) -> "VersionedClass":
+        """Gets a class based on the version.
 
         Args:
-            version (str, list, tuple, :obj:`Version`): The key to search for the class with.
+            version: The key to search for the class with.
             type_ (str, optional): The type of class to get.
-            exact (bool, optional): Determines whether the exact version is need or return the closest version.
-            sort (bool, optional): If True, sorts the registry before getting the class.
+            exact: Determines whether the exact version is need or return the closest version.
+            sort: If True, sorts the registry before getting the class.
 
         Returns:
             obj: The class found.
@@ -92,7 +94,7 @@ class VersionedClass(metaclass=VersionedMeta):
 
     # Magic Methods
     # Construction/Destruction
-    def __new__(cls, *args, **kwargs):
+    def __new__(cls, *args: Any, **kwargs: Any) -> "VersionedClass":
         """With given input, will return the correct subclass."""
         if id(cls) == id(VersionedClass) and (kwargs or args):
             if args:

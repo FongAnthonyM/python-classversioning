@@ -1,6 +1,5 @@
-
 """ versiontype.py
-A dataclass like object that contains a str name and associated class for a version. See versions for examples of
+A dataclass like object that contains a string name and associated class for a version. See versions for examples of
 implementation.
 """
 # Package Header #
@@ -15,6 +14,7 @@ __email__ = __email__
 
 # Imports #
 # Standard Libraries #
+from typing import Any
 
 # Third-Party Packages #
 from baseobjects import BaseObject
@@ -25,28 +25,31 @@ from baseobjects import BaseObject
 # Definitions #
 # Classes #
 class VersionType(BaseObject):
-    """A dataclass like object that contains a str name and associated class for a version.
+    """A dataclass like object that contains a string name and associated class for a version.
 
     Attributes:
-        name (str, optional): The string name of this object.
-        class_ (:class:, optional): The class of the version.
+        name: The string name of this object.
+        class_: The class of the version.
 
     Args:
-        name (str): The string name of this object.
-        class_ (:class:): The class of the version.
+        name: The string name of this object.
+        class_ : The class of the version.
+        init: Determines if this object will construct.
     """
     __slots__ = ["name", "class_"]
 
     # Construction/Destruction
-    def __init__(self, name=None, class_=None, init=True):
-        self.name = None
-        self.class_ = None
+    def __init__(self, name: str | None = None, class_: type | None = None, init: bool = True) -> None:
+        # New Attributes #
+        self.name: str | None = None
+        self.class_: type | None = None
 
+        # Object Construction #
         if init:
             self.construct(name=name, class_=class_)
 
     # Representation
-    def __hash__(self):
+    def __hash__(self) -> int:
         """Overrides hash to make the object hashable.
 
         Returns:
@@ -55,7 +58,7 @@ class VersionType(BaseObject):
         return id(self)
 
     # Type Conversion
-    def __str__(self):
+    def __str__(self) -> str:
         """Returns the str representation of the version.
 
         Returns:
@@ -64,14 +67,14 @@ class VersionType(BaseObject):
         return self.name
 
     # Comparison
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> bool:
         """Expands on equals comparison to include comparing the version number.
 
         Args:
-            other (:obj:): The object to compare to this object.
+            other: The object to compare to this object.
 
         Returns:
-            bool: True if the other object or version number is equivalent.
+            True if the other object or version number is equivalent.
         """
         if isinstance(other, type(self)):
             return other.name == self.name
@@ -80,11 +83,11 @@ class VersionType(BaseObject):
         else:
             return super().__eq__(other)
 
-    def __ne__(self, other):
+    def __ne__(self, other: Any) -> bool:
         """Expands on not equals comparison to include comparing the version number.
 
         Args:
-            other (:obj:): The object to compare to this object.
+            other: The object to compare to this object.
 
         Returns:
             bool: True if the other object or version number is not equivalent.
@@ -97,12 +100,14 @@ class VersionType(BaseObject):
             return super().__ne__(other)
 
     # Methods
-    def construct(self, name=None, class_=None):
+    def construct(self, name: str | None = None, class_: type | None = None) -> None:
         """Constructs the version type object based on inputs.
 
         Args:
-            name (str, optional): The string name of this object.
-            class_ (:class:, optional): The class of the version.
+            name: The string name of this object.
+            class_: The class of the version.
         """
-        self.name = name
-        self.class_ = class_
+        if name is not None:
+            self.name = name
+        if class_ is not None:
+            self.class_ = class_
