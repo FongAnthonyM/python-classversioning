@@ -1,12 +1,11 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 """ versionregistry.py
 VersionRegistry creates registries of the Versions which keep track of several versioning schemas. For example, there
 could be two different file types that both use TriNumberVersions, this registry keeps the class versions from these
 different files separate from each other.
 """
 # Package Header #
-from .__header__ import *
+from .header import *
 
 # Header #
 __author__ = __author__

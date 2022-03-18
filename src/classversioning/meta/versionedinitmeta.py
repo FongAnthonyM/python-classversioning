@@ -1,10 +1,8 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """ versionedinitmeta.py
-Description:
+A mixed class of the InitMeta and VersionMeta.
 """
 # Package Header #
-from ..__header__ import *
+from ..header import *
 
 # Header #
 __author__ = __author__

@@ -4,7 +4,7 @@
 Description:
 """
 # Package Header #
-from src.classversioning.__header__ import *
+from src.classversioning.header import *
 
 # Header #
 __author__ = __author__

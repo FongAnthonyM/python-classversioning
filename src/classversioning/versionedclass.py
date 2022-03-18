@@ -1,12 +1,11 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 """ versionedclass.py
 VersionedClass is an abstract class which has an associated version which can be used to compare against other
 VersionedClasses. Typically, a base class for a version schema should directly inherit from VersionedClass then the
 actual versions should inherit from that base class.
 """
 # Package Header #
-from .__header__ import *
+from .header import *
 
 # Header #
 __author__ = __author__

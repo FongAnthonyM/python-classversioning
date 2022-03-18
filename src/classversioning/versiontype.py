@@ -1,11 +1,10 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 """ versiontype.py
 A dataclass like object that contains a str name and associated class for a version. See versions for examples of
 implementation.
 """
 # Package Header #
-from .__header__ import *
+from .header import *
 
 # Header #
 __author__ = __author__

@@ -1,12 +1,10 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """ trinumberversion.py
 TriNumberVersion is a versioning system which is defined by three numbers. This class does not enforce any special
 meaning of the three number, but the Major number is more significant than the Minor number which is more
 significant than the Patch number. A good example of the tri-number framework can be found at https://semver.org/
 """
 # Package Header #
-from ..__header__ import *
+from ..header import *
 
 # Header #
 __author__ = __author__
@@ -29,24 +27,33 @@ from ..version import Version
 class TriNumberVersion(Version):
     """A dataclass like class that stores and handles a version number.
 
-    Args:
-        obj (int, str, :obj:`list`, :obj:`tuple`, optional): An object to derive a version from.
-        major (int, optional):The major change number of the version.
-        minor (int, optional): The minor change number of the version.
-        patch (int, optional), optional: The patch change number of the version.
-        ver_name (str, optional): The name of the version type being used.
-
     Attributes:
         major (int): The major change number of the version.
         minor (int): The minor change number of the version.
         patch (int): The patch change number of the version.
+
+    Args:
+        obj (int, str, :obj:`list`, :obj:`tuple`, optional): An object to derive a version from.
+        major: The major change number of the version.
+        minor: The minor change number of the version.
+        patch: The patch change number of the version.
+        ver_name : The name of the version type being used.
     """
-    default_version_name = "TriNumber"
+    default_version_name: str = "TriNumber"
     __slots__ = ["major", "minor", "patch"]
 
     # Magic Methods
     # Construction/Destruction
-    def __init__(self, obj=None, major=0, minor=0, patch=0, ver_name=None, init=True):
+    def __init__(
+        self,
+        obj=None,
+        major: int = 0,
+        minor: int = 0,
+        patch: int = 0,
+        ver_name: str | None = None,
+        init: bool = True,
+    ) -> None:
+
         super().__init__(init=False)
         self.major = major
         self.minor = minor

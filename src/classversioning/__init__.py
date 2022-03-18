@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 """ __init__.py
 Provides version tools for create versioning for classes using inheritance. A VersionedClass is structured so any
 subclasses can optionally define a version which can be used to compare other subclasses. This versioning framework
@@ -10,7 +9,7 @@ previous version. In this case an appropriate class which addresses each version
 the file which can be defined by the class' version.
 """
 # Package Header #
-from .__header__ import *
+from .header import *
 
 # Header #
 __author__ = __author__

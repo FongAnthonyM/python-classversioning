@@ -1,10 +1,8 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """ cachingversionedinitmeta.py
-
+A mixed class of the CachingInitMeta and VersionMeta.
 """
 # Package Header #
-from ..__header__ import *
+from ..header import *
 
 # Header #
 __author__ = __author__
