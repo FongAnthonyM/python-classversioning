@@ -241,23 +241,25 @@ class TriNumberVersion(Version):
         Raises:
             TypeError: If the supplied input cannot be used to construct this object.
         """
-        raise ValueError(f"{type(self)} cannot set the version with {type(version)}")
+        raise TypeError(f"{type(self)} cannot set the version with {type(version)}")
 
     @set_version.register(Iterable)
-    def _(self, version: Iterable[int]) -> None:
+    def _(self, version: Iterable[int], **kwargs: Any) -> None:
         """Sets the version when given an iterable.
 
         Args:
             version: The version as an iterable.
+            **kwargs: Addition keyword argumnets for setting the version.
         """
         self.major, self.minor, self.patch = version
 
     @set_version.register
-    def _(self, version: str) -> None:
+    def _(self, version: str, **kwargs: Any) -> None:
         """Sets the version when given a string.
 
         Args:
             version: The version as a string.
+            **kwargs: Addition keyword argumnets for setting the version.
         """
         ranks = version.split('.')
         for i, r in enumerate(ranks):
@@ -265,13 +267,14 @@ class TriNumberVersion(Version):
         self.major, self.minor, self.patch = ranks
 
     @set_version.register
-    def _(self, version: int, minor: int | None = None, patch: int | None = None) -> None:
+    def _(self, version: int, minor: int | None = None, patch: int | None = None, **kwargs: Any) -> None:
         """Sets the version when given int.
 
         Args:
             version: The major change number of the version.
             minor: The minor change number of the version.
             patch: The patch change number of the version.
+            **kwargs: Addition keyword argumnets for setting the version.
         """
         self.major = version
         if minor is not None:
