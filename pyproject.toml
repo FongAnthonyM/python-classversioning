@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "classversioning"
-version = "0.4.1"
+version = "0.5.0"
 description = "Tools for create versioning for classes using inheritance."
 authors = ["Anthony Fong <FongAnthonyM@gmail.com>"]
 license = "MIT"
@@ -16,9 +16,9 @@ classifiers = [
 Changelog = "https://github.com/FongAnthonyM/classversioning/releases"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.10"
 click = "^8.0.1"
-baseobjects = "^1.5.1"
+baseobjects = "^1.9.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"

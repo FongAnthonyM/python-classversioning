@@ -1,10 +1,9 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 """ conftest.py
 Used for pytest directory-specific hook implementations and directory inclusion for imports.
 """
 # Package Header #
-from src.classversioning.__header__ import *
+from src.classversioning.header import *
 
 # Header #
 __author__ = __author__

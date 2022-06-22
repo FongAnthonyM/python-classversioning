@@ -1,12 +1,10 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """ versionregistry.py
 VersionRegistry creates registries of the Versions which keep track of several versioning schemas. For example, there
 could be two different file types that both use TriNumberVersions, this registry keeps the class versions from these
 different files separate from each other.
 """
 # Package Header #
-from .__header__ import *
+from .header import *
 
 # Header #
 __author__ = __author__
@@ -19,11 +17,13 @@ __email__ = __email__
 # Standard Libraries #
 import bisect
 from collections import UserDict
+from collections.abc import Iterable
+from typing import Any
 
 # Third-Party Packages #
+from baseobjects.versioning import VersionType
 
 # Local Packages #
-from .version import VersionType
 
 
 # Definitions #
@@ -36,13 +36,13 @@ class VersionRegistry(UserDict):
     """
 
     # Instance Methods
-    def get_version(self, type_, key, exact=False):
-        """Gets an object from the registry base on the type and version of object.
+    def get_version(self, type_: str | VersionType, key: Iterable[int] | str | int, exact: bool = False) -> Any:
+        """Gets an object from the registry based on the type and version of object.
 
         Args:
-            type_ (str): The type of versioned object to get.
-            key (str, list, tuple, :obj:`Version`): The key to search for the versioned object with.
-            exact (bool, optional): Determines whether the exact version is need or return the closest version.
+            type_: The type of versioned object to get.
+            key: The key to search for the versioned object with.
+            exact: Determines whether the exact version is need or return the closest version.
         Returns
             obj: The versioned object.
 
@@ -67,23 +67,23 @@ class VersionRegistry(UserDict):
         else:
             return versions[index-1]
 
-    def get_version_type(self, name):
+    def get_version_type(self, name: str) -> VersionType:
         """Gets the type object being used as a key.
 
         Args:
-            name (str): The name of the type object.
+            name: The name of the type object.
 
         Returns:
-            :obj:`VersionType`: The type object requested.
+            The type object requested.
         """
         return self.data[name]["type"]
 
-    def add_item(self, item, type_=None):
+    def add_item(self, item: Any, type_: str | None = None) -> None:
         """Adds a versioned item into the registry.
 
         Args
-            type_ (str): The type of versioned object to add.
-            item (:obj:`Version`): The versioned object to add.
+            item: The versioned object to add.
+            type_: The type of versioned object to add.
         """
         if isinstance(type_, str):
             name = type_
@@ -98,12 +98,12 @@ class VersionRegistry(UserDict):
         else:
             self.data[name] = {"type": type_, "list": [item]}
 
-    def sort(self, type_=None, **kwargs):
+    def sort(self, type_: str | None = None, **kwargs: Any) -> None:
         """Sorts the registry.
 
         Args:
-            type_ (str, optional): The type of versioned object to add.
-            **kwargs: Args that are passed to the list sort function.
+            type_: The type of versioned object to add.
+            **kwargs: Keyword arguments that are passed to the list sort function.
         """
         if type_ is None:
             for versions in self.data.values():

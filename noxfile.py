@@ -1,6 +1,6 @@
 """Nox sessions."""
 # Package Header #
-from src.classversioning.__header__ import *
+from src.classversioning.header import *
 
 # Header #
 __author__ = __author__
@@ -35,7 +35,7 @@ except ImportError:
 
 # Definitions #
 package = "classversioning"
-python_versions = ["3.10", "3.9", "3.8", "3.7"]
+python_versions = ["3.10"]
 nox.needs_version = ">= 2021.6.6"
 nox.options.sessions = (
     "pre-commit",
@@ -131,7 +131,7 @@ def safety(session: Session) -> None:
 @session(python=python_versions)
 def mypy(session: Session) -> None:
     """Type-check using mypy."""
-    args = session.posargs or ["src", "tests", "docs/conf.py"]
+    args = session.posargs or ["src", "docs/conf.py"]
     session.install(".")
     session.install("mypy", "pytest")
     session.run("mypy", *args)
