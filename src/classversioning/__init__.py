@@ -19,8 +19,7 @@ __email__ = __email__
 
 # Imports #
 # Local Packages #
+from baseobjects.versioning import *
 from .meta import *
-from .version import Version, VersionType
-from .versions import *
 from .versionregistry import VersionRegistry
 from .versionedclass import VersionedClass

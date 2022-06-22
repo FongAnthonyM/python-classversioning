@@ -17,9 +17,9 @@ from typing import Any
 
 # Third-Party Packages #
 from baseobjects import BaseMeta
+from baseobjects.versioning import Version
 
 # Local Packages #
-from ..version import Version
 
 
 # Definitions #

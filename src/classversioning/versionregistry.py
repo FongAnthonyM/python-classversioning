@@ -21,9 +21,9 @@ from collections.abc import Iterable
 from typing import Any
 
 # Third-Party Packages #
+from baseobjects.versioning import VersionType
 
 # Local Packages #
-from .version import VersionType
 
 
 # Definitions #

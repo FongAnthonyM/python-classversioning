@@ -19,11 +19,11 @@ __email__ = __email__
 from typing import Any
 
 # Third-Party Packages #
+from baseobjects.versioning import VersionType
+from baseobjects.versioning import Version
 
 # Local Packages #
 from .meta import VersionedMeta
-from .versiontype import VersionType
-from .version import Version
 from .versionregistry import VersionRegistry
 
 
