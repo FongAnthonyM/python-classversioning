@@ -60,13 +60,12 @@ class VersionedClass(metaclass=VersionedMeta):
         if cls._registration:
             cls._registry.add_item(cls, type_)
 
-    # Static Methods
-    @staticmethod
-    def get_version_from_object(obj: Any) -> Version:
+    # Class Methods
+    @classmethod
+    def get_version_from_object(cls, obj: Any) -> Version:
         """An optional abstract method that must return a version from an object."""
         raise NotImplementedError("This method needs to be defined in the subclass.")
 
-    # Class Methods
     @classmethod
     def get_version_class(cls, version: Any, type_=None, exact: bool = False, sort: bool = False) -> "VersionedClass":
         """Gets a class based on the version.

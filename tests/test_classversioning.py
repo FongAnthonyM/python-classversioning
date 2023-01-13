@@ -56,8 +56,8 @@ class TestVersionedClass(ClassTest):
         # versioned classes that they should have
         # different names.
 
-        @staticmethod
-        def get_version_from_object(obj):
+        @classmethod
+        def get_version_from_object(cls, obj):
             return obj["version"]
 
         # Automatic Version Instantiation
