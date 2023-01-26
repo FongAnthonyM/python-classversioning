@@ -27,6 +27,9 @@ from baseobjects.versioning import VersionType
 
 
 # Definitions #
+
+SENTINEL = object()
+
 # Classes #
 class VersionRegistry(UserDict):
     """A dictionary like class that holds versioned objects.
@@ -66,6 +69,20 @@ class VersionRegistry(UserDict):
             raise ValueError(f"Version needs to be greater than {str(versions[0])}, {str(key)} is not.")
         else:
             return versions[index-1]
+    
+    def get_latest_version(self, type_: str | VersionType, sentinel: Any = SENTINEL) -> Any:
+        """Gets an object from the registry based on the type and the latest version of that object.
+
+        Args:
+            type_: The type of versioned object to get.
+        Returns
+            obj: The versioned object.
+        """
+        if isinstance(type_, VersionType):
+            type_ = type_.name
+        
+        versions = self.data.get(type_, {}).get("list", [])
+        return versions[-1] if versions or sentinel is SENTINEL else sentinel
 
     def get_version_type(self, name: str) -> VersionType:
         """Gets the type object being used as a key.

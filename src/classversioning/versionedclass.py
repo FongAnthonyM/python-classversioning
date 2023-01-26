@@ -67,12 +67,18 @@ class VersionedClass(metaclass=VersionedMeta):
         raise NotImplementedError("This method needs to be defined in the subclass.")
 
     @classmethod
-    def get_version_class(cls, version: Any, type_=None, exact: bool = False, sort: bool = False) -> "VersionedClass":
+    def get_version_class(
+        cls, 
+        version: Any, 
+        type_: str | None = None, 
+        exact: bool = False, 
+        sort: bool = False,
+    ) -> "VersionedClass":
         """Gets a class based on the version.
 
         Args:
             version: The key to search for the class with.
-            type_ (str, optional): The type of class to get.
+            type_: The type of class to get.
             exact: Determines whether the exact version is need or return the closest version.
             sort: If True, sorts the registry before getting the class.
 
@@ -90,6 +96,25 @@ class VersionedClass(metaclass=VersionedMeta):
             version = cls.get_version_from_object(version)
 
         return cls._registry.get_version(type_, version, exact=exact)
+
+    @classmethod
+    def get_latest_version_class(cls, type_: str | None = None, sort: bool = False) -> "VersionedClass":
+        """Gets a class based on the latest version.
+
+        Args:
+            type_: The type of class to get.
+            sort: If True, sorts the registry before getting the class.
+
+        Returns:
+            obj: The class found.
+        """
+        if type_ is None:
+            type_ = cls._VERSION_TYPE
+
+        if sort:
+            cls._registry.sort(type_)
+
+        return cls._registry.get_latest_version(type_, cls)
 
     # Magic Methods
     # Construction/Destruction
