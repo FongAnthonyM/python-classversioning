@@ -84,16 +84,21 @@ class VersionRegistry(UserDict):
         versions = self.data.get(type_, {}).get("list", [])
         return versions[-1] if versions or sentinel is SENTINEL else sentinel
 
-    def get_version_type(self, name: str) -> VersionType:
+    def get_version_type(self, name: str, default: Any = SENTINEL) -> VersionType:
         """Gets the type object being used as a key.
 
         Args:
             name: The name of the type object.
+            default: A default value to return if the version does not exist.
 
         Returns:
             The type object requested.
         """
-        return self.data[name]["type"]
+        if default is SENTINEL:
+            return self.data[name]["type"]
+        else:
+            item = self.data.get(name, None)
+            return default if item is None else item["type"]
 
     def add_item(self, item: Any, type_: str | None = None) -> None:
         """Adds a versioned item into the registry.

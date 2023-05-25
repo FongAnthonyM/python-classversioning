@@ -34,11 +34,13 @@ class VersionedClass(metaclass=VersionedMeta):
 
     Class Attributes:
         _registry: A registry of all subclasses and versions of this class.
+        _dispatch_kwarg: The name of the kwarg to use for version dispatching when a new object is made.
         _registration: Specifies if versions will be tracked and will recurse to parent.
         _VERSION_TYPE: The type of version this object will be.
         VERSION: The version of this class as a string.
     """
     _registry: VersionRegistry = VersionRegistry()
+    _dispatch_kwarg: str = "obj"
     _registration: bool = True
     _VERSION_TYPE: VersionType = None
     VERSION: Version = None
@@ -49,6 +51,9 @@ class VersionedClass(metaclass=VersionedMeta):
         """Adds the future child classes to the registry upon class instantiation"""
         super().__init_subclass__(**kwargs)
 
+        if cls._VERSION_TYPE.head_class is None:
+            cls._VERSION_TYPE.head_class = cls
+        
         type_ = cls._VERSION_TYPE
         class_ = cls._VERSION_TYPE.class_
 
@@ -120,12 +125,12 @@ class VersionedClass(metaclass=VersionedMeta):
     # Construction/Destruction
     def __new__(cls, *args: Any, **kwargs: Any) -> "VersionedClass":
         """With given input, will return the correct subclass."""
-        if id(cls) == id(VersionedClass) and (kwargs or args):
-            if args:
-                obj = args[0]
-            else:
-                obj = kwargs["obj"]
-            class_ = cls.get_version_class(obj)
+        version_type = cls._registry.get_version_type(cls._VERSION_TYPE.name, None)
+        if version_type is not None and version_type.head_class is cls and (kwargs or args):
+            class_ = cls.get_version_class(
+                args[0] if args else kwargs[cls._dispatch_kwarg], 
+                type_=cls._VERSION_TYPE.name,
+            )
             return class_(*args, **kwargs)
         else:
             return super().__new__(cls)
