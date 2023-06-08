@@ -1,4 +1,4 @@
-""" __init__.py
+"""__init__.py
 Provides version tools for create versioning for classes using inheritance. A VersionedClass is structured so any
 subclasses can optionally define a version which can be used to compare other subclasses. This versioning framework
 can also be used for objects of these classes, but it is primarily designed around versioning classes. Versioning is

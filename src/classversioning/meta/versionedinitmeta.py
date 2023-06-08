@@ -1,4 +1,4 @@
-""" versionedinitmeta.py
+"""versionedinitmeta.py
 A mixed class of the InitMeta and VersionMeta.
 """
 # Package Header #

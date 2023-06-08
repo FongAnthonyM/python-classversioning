@@ -1,13 +1,4 @@
 """Nox sessions."""
-# Package Header #
-from src.classversioning.header import *
-
-# Header #
-__author__ = __author__
-__credits__ = __credits__
-__maintainer__ = __maintainer__
-__email__ = __email__
-
 # Imports #
 # Standard Libraries #
 import shutil
@@ -15,8 +6,8 @@ import sys
 from pathlib import Path
 from textwrap import dedent
 
-# Third-Party Packages #
 import nox
+# Third-Party Packages #
 
 try:
     from nox_poetry import Session

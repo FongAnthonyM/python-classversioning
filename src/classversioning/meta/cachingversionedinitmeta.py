@@ -1,4 +1,4 @@
-""" cachingversionedinitmeta.py
+"""cachingversionedinitmeta.py
 A mixed class of the CachingInitMeta and VersionMeta.
 """
 # Package Header #

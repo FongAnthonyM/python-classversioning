@@ -1,5 +1,4 @@
-
-""" conftest.py
+"""conftest.py
 Used for pytest directory-specific hook implementations and directory inclusion for imports.
 """
 # Package Header #
