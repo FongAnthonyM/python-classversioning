@@ -1,4 +1,4 @@
-""" versionedmeta.py
+"""versionedmeta.py
 A Meta Class that can compare the specified version of the classes.
 """
 # Package Header #
@@ -31,8 +31,8 @@ class VersionedMeta(BaseMeta):
         _VERSION_TYPE: The type of version this object will be.
         VERSION: The version of this class as a string.
     """
-    _VERSION_TYPE: type = None
-    VERSION: Version = None
+    _VERSION_TYPE: type | None = None
+    VERSION: Version | None = None
 
     # Magic Methods
     # Representation
@@ -57,7 +57,7 @@ class VersionedMeta(BaseMeta):
         Raises:
             TypeError: If 'other' is a type that cannot be compared to.
         """
-        if isinstance(other, type(cls)):
+        if isinstance(other, cls.__class__):
             if id(cls) == id(object):
                 return True
             elif cls._VERSION_TYPE != other._VERSION_TYPE:
@@ -90,7 +90,7 @@ class VersionedMeta(BaseMeta):
         Raises:
             TypeError: If 'other' is a type that cannot be compared to.
         """
-        if isinstance(other, type(cls)):
+        if isinstance(other, cls.__class__):
             if cls._VERSION_TYPE != other._VERSION_TYPE:
                 super().__ne__(other)
             other_version = other.VERSION
@@ -121,7 +121,7 @@ class VersionedMeta(BaseMeta):
         Raises:
             TypeError: If 'other' is a type that cannot be compared to.
         """
-        if isinstance(other, type(cls)):
+        if isinstance(other, cls.__class__):
             if cls._VERSION_TYPE != other._VERSION_TYPE:
                 raise TypeError(f"'<' not supported between instances of '{str(cls)}' and '{str(other)}'")
             other_version = other.VERSION
@@ -147,7 +147,7 @@ class VersionedMeta(BaseMeta):
         Raises:
             TypeError: If 'other' is a type that cannot be compared to.
         """
-        if isinstance(other, type(cls)):
+        if isinstance(other, cls.__class__):
             if cls._VERSION_TYPE != other._VERSION_TYPE:
                 raise TypeError(f"'>' not supported between instances of '{str(cls)}' and '{str(other)}'")
             other_version = other.VERSION
@@ -173,7 +173,7 @@ class VersionedMeta(BaseMeta):
         Raises:
             TypeError: If 'other' is a type that cannot be compared to.
         """
-        if isinstance(other, type(cls)):
+        if isinstance(other, cls.__class__):
             if cls._VERSION_TYPE != other._VERSION_TYPE:
                 raise TypeError(f"'<=' not supported between instances of '{str(cls)}' and '{str(other)}'")
             other_version = other.VERSION
@@ -199,7 +199,7 @@ class VersionedMeta(BaseMeta):
         Raises:
             TypeError: If 'other' is a type that cannot be compared to.
         """
-        if isinstance(other, type(cls)):
+        if isinstance(other, cls.__class__):
             if cls._VERSION_TYPE != other._VERSION_TYPE:
                 raise TypeError(f"'>=' not supported between instances of '{str(cls)}' and '{str(other)}'")
             other_version = other.VERSION
@@ -209,8 +209,6 @@ class VersionedMeta(BaseMeta):
             other_version = cls.VERSION.cast(other)
 
         if isinstance(other_version, type(cls.VERSION)):
-            return cls.VERSION <= other_version
+            return cls.VERSION >= other_version
         else:
             raise TypeError(f"'>=' not supported between instances of '{str(cls)}' and '{str(other)}'")
-
-

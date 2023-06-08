@@ -1,4 +1,4 @@
-""" versionregistry.py
+"""versionregistry.py
 VersionRegistry creates registries of the Versions which keep track of several versioning schemas. For example, there
 could be two different file types that both use TriNumberVersions, this registry keeps the class versions from these
 different files separate from each other.
@@ -21,14 +21,14 @@ from collections.abc import Iterable
 from typing import Any
 
 # Third-Party Packages #
-from baseobjects.versioning import VersionType
+from baseobjects.versioning import VersionType, Version
 
 # Local Packages #
 
 
 # Definitions #
-
 SENTINEL = object()
+
 
 # Classes #
 class VersionRegistry(UserDict):
@@ -39,7 +39,12 @@ class VersionRegistry(UserDict):
     """
 
     # Instance Methods
-    def get_version(self, type_: str | VersionType, key: Iterable[int] | str | int, exact: bool = False) -> Any:
+    def get_version(
+        self,
+        type_: str | VersionType,
+        key: Version | Iterable[int] | str | int,
+        exact: bool = False,
+    ) -> Any:
         """Gets an object from the registry based on the type and version of object.
 
         Args:
@@ -63,26 +68,28 @@ class VersionRegistry(UserDict):
         if exact:
             index = versions.index(key)
         else:
-            index = bisect.bisect(versions, key)
+            index = bisect.bisect(versions, key) - 1
 
         if index < 0:
             raise ValueError(f"Version needs to be greater than {str(versions[0])}, {str(key)} is not.")
         else:
-            return versions[index-1]
-    
-    def get_latest_version(self, type_: str | VersionType, sentinel: Any = SENTINEL) -> Any:
+            return versions[index]
+
+    def get_latest_version(self, type_: str | VersionType, default: Any = SENTINEL) -> Any:
         """Gets an object from the registry based on the type and the latest version of that object.
 
         Args:
             type_: The type of versioned object to get.
+            default: A default object to return if a version cannot be found.
+
         Returns
             obj: The versioned object.
         """
         if isinstance(type_, VersionType):
             type_ = type_.name
-        
+
         versions = self.data.get(type_, {}).get("list", [])
-        return versions[-1] if versions or sentinel is SENTINEL else sentinel
+        return versions[-1] if versions or default is SENTINEL else default
 
     def get_version_type(self, name: str, default: Any = SENTINEL) -> VersionType:
         """Gets the type object being used as a key.
@@ -100,7 +107,7 @@ class VersionRegistry(UserDict):
             item = self.data.get(name, None)
             return default if item is None else item["type"]
 
-    def add_item(self, item: Any, type_: str | None = None) -> None:
+    def add_item(self, item: Any, type_: VersionType | str | None = None) -> None:
         """Adds a versioned item into the registry.
 
         Args

@@ -1,5 +1,4 @@
-
-""" versionedclass.py
+"""versionedclass.py
 VersionedClass is an abstract class which has an associated version which can be used to compare against other
 VersionedClasses. Typically, a base class for a version schema should directly inherit from VersionedClass then the
 actual versions should inherit from that base class.
@@ -16,7 +15,7 @@ __email__ = __email__
 
 # Imports #
 # Standard Libraries #
-from typing import Any
+from typing import Any, Iterable
 
 # Third-Party Packages #
 from baseobjects.versioning import VersionType
@@ -53,7 +52,7 @@ class VersionedClass(metaclass=VersionedMeta):
 
         if cls._VERSION_TYPE.head_class is None:
             cls._VERSION_TYPE.head_class = cls
-        
+
         type_ = cls._VERSION_TYPE
         class_ = cls._VERSION_TYPE.class_
 
@@ -67,16 +66,16 @@ class VersionedClass(metaclass=VersionedMeta):
 
     # Class Methods
     @classmethod
-    def get_version_from_object(cls, obj: Any) -> Version:
+    def get_version_from_object(cls, obj: Any) -> Version | str | Iterable:
         """An optional abstract method that must return a version from an object."""
-        raise NotImplementedError("This method needs to be defined in the subclass.")
+        raise NotImplementedError("This method needs to be set in the version head to dispatch the propper class.")
 
     @classmethod
     def get_version_class(
-        cls, 
-        version: Any, 
-        type_: str | None = None, 
-        exact: bool = False, 
+        cls,
+        version: Version | str | Iterable,
+        type_: str | None = None,
+        exact: bool = False,
         sort: bool = False,
     ) -> "VersionedClass":
         """Gets a class based on the version.
@@ -96,14 +95,10 @@ class VersionedClass(metaclass=VersionedMeta):
         if sort:
             cls._registry.sort(type_)
 
-        if not isinstance(version, str) and not isinstance(version, list) and \
-           not isinstance(version, tuple) and not isinstance(version, Version):
-            version = cls.get_version_from_object(version)
-
         return cls._registry.get_version(type_, version, exact=exact)
 
     @classmethod
-    def get_latest_version_class(cls, type_: str | None = None, sort: bool = False) -> "VersionedClass":
+    def get_latest_version_class(cls, type_: str | VersionType | None = None, sort: bool = False) -> "VersionedClass":
         """Gets a class based on the latest version.
 
         Args:
@@ -127,10 +122,8 @@ class VersionedClass(metaclass=VersionedMeta):
         """With given input, will return the correct subclass."""
         version_type = cls._registry.get_version_type(cls._VERSION_TYPE.name, None)
         if version_type is not None and version_type.head_class is cls and (kwargs or args):
-            class_ = cls.get_version_class(
-                args[0] if args else kwargs[cls._dispatch_kwarg], 
-                type_=cls._VERSION_TYPE.name,
-            )
+            version = cls.get_version_from_object(args[0] if args else kwargs[cls._dispatch_kwarg])
+            class_ = cls.get_version_class(version, type_=cls._VERSION_TYPE.name)
             return class_(*args, **kwargs)
         else:
             return super().__new__(cls)
