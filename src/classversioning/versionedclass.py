@@ -122,8 +122,11 @@ class VersionedClass(metaclass=VersionedMeta):
         """With given input, will return the correct subclass."""
         version_type = cls._registry.get_version_type(cls._VERSION_TYPE.name, None)
         if version_type is not None and version_type.head_class is cls and (kwargs or args):
-            version = cls.get_version_from_object(args[0] if args else kwargs[cls._dispatch_kwarg])
-            class_ = cls.get_version_class(version, type_=cls._VERSION_TYPE.name)
-            return class_(*args, **kwargs)
+            try:
+                version = cls.get_version_from_object(args[0] if args else kwargs[cls._dispatch_kwarg])
+                class_ = cls.get_version_class(version, type_=cls._VERSION_TYPE.name)
+                return class_(*args, **kwargs)
+            except FileNotFoundError:
+                return super().__new__(cls)
         else:
             return super().__new__(cls)
