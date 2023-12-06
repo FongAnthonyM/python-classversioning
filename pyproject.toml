@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "classversioning"
-version = "0.7.0"
+version = "0.8.0"
 description = "Tools for create versioning for classes using inheritance."
 authors = ["Anthony Fong <FongAnthonyM@gmail.com>"]
 license = "MIT"
