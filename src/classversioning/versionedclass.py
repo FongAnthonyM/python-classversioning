@@ -77,6 +77,7 @@ class VersionedClass(metaclass=VersionedMeta):
         type_: str | None = None,
         exact: bool = False,
         sort: bool = False,
+        module: str | None = None,
     ) -> "VersionedClass":
         """Gets a class based on the version.
 
@@ -85,6 +86,7 @@ class VersionedClass(metaclass=VersionedMeta):
             type_: The type of class to get.
             exact: Determines whether the exact version is need or return the closest version.
             sort: If True, sorts the registry before getting the class.
+            module: The module to import if the class is not found.
 
         Returns:
             obj: The class found.
@@ -95,7 +97,7 @@ class VersionedClass(metaclass=VersionedMeta):
         if sort:
             cls._registry.sort(type_)
 
-        return cls._registry.get_version(type_, version, exact=exact)
+        return cls._registry.get_version(type_, version, exact=exact, module=module)
 
     @classmethod
     def get_latest_version_class(cls, type_: str | VersionType | None = None, sort: bool = False) -> "VersionedClass":

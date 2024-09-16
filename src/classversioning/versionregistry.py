@@ -18,16 +18,18 @@ __email__ = __email__
 import bisect
 from collections import UserDict
 from collections.abc import Iterable
+from importlib import import_module
 from typing import Any
 
 # Third-Party Packages #
+from baseobjects import SentinelObject
 from baseobjects.versioning import VersionType, Version
 
 # Local Packages #
 
 
 # Definitions #
-SENTINEL = object()
+SENTINEL = SentinelObject("version_search")
 
 
 # Classes #
@@ -44,6 +46,7 @@ class VersionRegistry(UserDict):
         type_: str | VersionType,
         key: Version | Iterable[int] | str | int,
         exact: bool = False,
+        module: str | None = None,
     ) -> Any:
         """Gets an object from the registry based on the type and version of object.
 
@@ -51,6 +54,8 @@ class VersionRegistry(UserDict):
             type_: The type of versioned object to get.
             key: The key to search for the versioned object with.
             exact: Determines whether the exact version is need or return the closest version.
+            module: The module to import if the version does not exist.
+
         Returns
             obj: The versioned object.
 
@@ -60,7 +65,12 @@ class VersionRegistry(UserDict):
         if isinstance(type_, VersionType):
             type_ = type_.name
 
-        versions = self.data[type_]["list"]
+        if (item := self.data.get(type_, None)) is None:
+            if module is not None:
+                import_module(module)
+            item = self.data.get(type_, None)
+
+        versions = item["list"]
         if isinstance(key, str) or isinstance(key, list) or isinstance(key, tuple):
             version_class = self.data[type_]["type"].class_
             key = version_class.cast(key)
@@ -91,21 +101,25 @@ class VersionRegistry(UserDict):
         versions = self.data.get(type_, {}).get("list", [])
         return versions[-1] if versions or default is SENTINEL else default
 
-    def get_version_type(self, name: str, default: Any = SENTINEL) -> VersionType:
+    def get_version_type(self, name: str, default: Any = SENTINEL, module: str | None = None) -> VersionType:
         """Gets the type object being used as a key.
 
         Args:
             name: The name of the type object.
             default: A default value to return if the version does not exist.
+            module: The module to import if the version does not exist.
 
         Returns:
             The type object requested.
         """
-        if default is SENTINEL:
-            return self.data[name]["type"]
-        else:
-            item = self.data.get(name, None)
-            return default if item is None else item["type"]
+        if (item := self.data.get(name, None)) is None:
+            if module is not None:
+                import_module(module)
+            if default is SENTINEL:
+                return self.data[name]["type"]
+            else:
+                item = self.data.get(name, None)
+        return default if item is None else item["type"]
 
     def add_item(self, item: Any, type_: VersionType | str | None = None) -> None:
         """Adds a versioned item into the registry.

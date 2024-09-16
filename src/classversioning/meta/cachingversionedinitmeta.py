@@ -25,4 +25,3 @@ from .versionedmeta import VersionedMeta
 # Meta Classes #
 class CachingVersionedInitMeta(CachingInitMeta, VersionedMeta):
     """A mixed class of the CachingInitMeta and VersionMeta."""
-    ...

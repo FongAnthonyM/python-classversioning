@@ -25,4 +25,3 @@ from .versionedmeta import VersionedMeta
 # Meta Classes #
 class VersionedInitMeta(InitMeta, VersionedMeta):
     """A mixed class of the InitMeta and VersionMeta."""
-    ...
